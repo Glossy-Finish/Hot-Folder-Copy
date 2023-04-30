@@ -1,8 +1,9 @@
 ###########################################
 #     ---- Hot Folder Copy ------
 # This python script will simply monitor
-# a set hot folder and move the files that
-# enter that hot folder to the destination
+# a set hot folder and move or copy the 
+# files that enter that hot folder to
+# the destination
 #
 # Created by Matt Winer - Glossy Finish
 # 4/29/23
