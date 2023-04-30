@@ -18,6 +18,7 @@ from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 import pathlib
 import configparser
+import platform
 
 
 class MyHandler(FileSystemEventHandler):
@@ -114,26 +115,30 @@ def start_monitoring():
     observer = Observer()
     observer.schedule(event_handler, folder_to_track, recursive=True)
     observer.start()
-    status_label.config(text=f"Monitoring {folder_to_track} for new files...")
+    status_label.config(text=f"Monitoring {folder_to_track} for new files...", fg="green")
     start_button.config(state=tk.DISABLED)
     browse_folder_button.config(state=tk.DISABLED)
     browse_destination_button.config(state=tk.DISABLED)
     stop_button.config(state=tk.NORMAL)
+    move_radio.config(state=tk.DISABLED)
+    copy_radio.config(state=tk.DISABLED)
 
 
 def stop_monitoring():
     observer.stop()
-    status_label.config(text="Monitoring stopped.")
+    status_label.config(text="Monitoring stopped.", fg="red")
     start_button.config(state=tk.NORMAL)
     browse_folder_button.config(state=tk.NORMAL)
     browse_destination_button.config(state=tk.NORMAL)
     stop_button.config(state=tk.DISABLED)
+    move_radio.config(state=tk.NORMAL)
+    copy_radio.config(state=tk.NORMAL)
 
 
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("Hot Folder Copy")
-    root.iconbitmap("GF_Icon.ico")
+    #root.iconbitmap("GF_Icon.ico")
     root.geometry("600x200")
 
     folder_var = tk.StringVar()
@@ -150,7 +155,11 @@ if __name__ == "__main__":
     folder_frame.pack(pady=10)
     folder_label = tk.Label(folder_frame, text="Folder to track:", width=15, anchor='e')
     folder_label.pack(side=tk.LEFT)
-    folder_entry = tk.Entry(folder_frame, textvariable=folder_var, width=30)
+    if platform.system() == 'Windows':
+        # If on Windows, increase the textbox width
+        folder_entry = tk.Entry(folder_frame, textvariable=folder_var, width=50)
+    else:
+        folder_entry = tk.Entry(folder_frame, textvariable=folder_var, width=30)
     folder_entry.pack(side=tk.LEFT)
     browse_folder_button = tk.Button(folder_frame, text="Browse...", command=browse_folder)
     browse_folder_button.pack(side=tk.LEFT)
@@ -159,7 +168,11 @@ if __name__ == "__main__":
     destination_frame.pack(pady=10)
     destination_label = tk.Label(destination_frame, text="Destination folder:", width=15, anchor='e')
     destination_label.pack(side=tk.LEFT)
-    destination_entry = tk.Entry(destination_frame, textvariable=destination_var, width=30)
+    if platform.system() == 'Windows':
+        # If on Windows, increase the textbox width
+        destination_entry = tk.Entry(destination_frame, textvariable=destination_var, width=50)
+    else:
+        destination_entry = tk.Entry(destination_frame, textvariable=destination_var, width=30)
     destination_entry.pack(side=tk.LEFT)
     browse_destination_button = tk.Button(destination_frame, text="Browse...", command=browse_destination)
     browse_destination_button.pack(side=tk.LEFT)
@@ -188,7 +201,7 @@ if __name__ == "__main__":
     stop_button = tk.Button(button_frame, text="Stop Monitoring", command=stop_monitoring, state=tk.DISABLED)
     stop_button.pack(side=tk.LEFT)
 
-    status_label = tk.Label(root, text="Select folders and click 'Start Monitoring' to begin.")
+    status_label = tk.Label(root, text="Select folders and click 'Start Monitoring' to begin.", fg="red")
     status_label.pack()
 
     # create the labels

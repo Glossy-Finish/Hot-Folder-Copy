@@ -1,6 +1,7 @@
 #ignore config files - they get generated automatically
 config.ini
 GF_icon.ico
+internalNotes
 
 #ignore mac files
 .DS_Store
@@ -8,6 +9,8 @@ GF_icon.ico
 #test folder
 hotfolder/
 dest/
+HFC.exe
+HFC.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
