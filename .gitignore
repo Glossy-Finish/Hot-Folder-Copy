@@ -1,3 +1,14 @@
+#ignore config files - they get generated automatically
+config.ini
+GF_icon.ico
+
+#ignore mac files
+.DS_Store
+
+#test folder
+hotfolder/
+dest/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
